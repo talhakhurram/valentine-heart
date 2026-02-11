@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Responsive Heart</title>
+
+<style>
+:root {
+    --scale: min(4vw, 4vh);   /* Automatically fits screen */
+}
+
+body {
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg,#fff0f5,#ffd6e8);
+    font-family:Arial, sans-serif;
+    overflow:hidden;
+}
+
+.wrapper {
+    position:relative;
+    width:90vmin;
+    height:90vmin;
+}
+
+.photo {
+    position:absolute;
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity;
+}
+
+.photo img {
+    width:8vmin;
+    height:8vmin;
+    object-fit:cover;
+    border-radius:1.2vmin;
+    box-shadow:0 0 1.5vmin rgba(255,105,180,0.5);
+    animation: pulse 4s infinite ease-in-out;
+    transition: transform 0.4s ease;
+}
+
+.photo img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0% { box-shadow:0 0 1vmin rgba(255,105,180,0.4); }
+    50% { box-shadow:0 0 3vmin rgba(255,20,147,1); }
+    100% { box-shadow:0 0 1vmin rgba(255,105,180,0.4); }
+}
+
+button {
+    position:absolute;
+    bottom:-8vmin;
+    left:50%;
+    transform:translateX(-50%);
+    padding:1vmin 3vmin;
+    border:none;
+    border-radius:4vmin;
+    background:linear-gradient(45deg,#ff4da6,#ff1a75);
+    color:white;
+    font-size:2vmin;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover {
+    transform:translateX(-50%) scale(1.1);
+}
+
+.move-up {
+    animation: floatUp 9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes floatUp {
+    0% { 
+        transform: translate(-50%, -50%) translate3d(0,0,0);
+        opacity:1; 
+    }
+    100% {
+        transform: translate(-50%, -50%) translate3d(0,-130vh,0);
+        opacity:0; 
+    }
+}
+
+.final-message {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:4vmin;
+    color:#e91e63;
+    font-weight:bold;
+    opacity:0;
+    transition:opacity 3s ease-in-out;
+}
+
+.show-message {
+    opacity:1;
+}
+
+.bg-heart {
+    position:absolute;
+    bottom:-30px;
+    font-size:3vmin;
+    color:#ff4da6;
+    animation: rise 14s linear infinite;
+    opacity:0.5;
+}
+
+@keyframes rise {
+    0% { transform: translateY(0); opacity:0.6; }
+    100% { transform: translateY(-140vh); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    
+        <div class="photo" 
+             style="left: calc(50% + 10.0 * var(--scale)); 
+                    top: calc(50% + -0.0 * var(--scale));">
+            <img src="photos/h12.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 7.747792791959054 * var(--scale)); 
+                    top: calc(50% + -1.6468441963905978 * var(--scale));">
+            <img src="photos/h11.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 5.419730449039038 * var(--scale)); 
+                    top: calc(50% + -2.413019462552293 * var(--scale));">
+            <img src="photos/h16.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 3.334887362273706 * var(--scale)); 
+                    top: calc(50% + -2.422937494799468 * var(--scale));">
+            <img src="photos/h19.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 1.7186965867472155 * var(--scale)); 
+                    top: calc(50% + -1.908805938435675 * var(--scale));">
+            <img src="photos/h4.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 0.6698729810778071 * var(--scale)); 
+                    top: calc(50% + -1.1602540378443869 * var(--scale));">
+            <img src="photos/h15.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 0.15124368228710874 * var(--scale)); 
+                    top: calc(50% + -0.46548019107679894 * var(--scale));">
+            <img src="photos/h20.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 0.005726178587738077 * var(--scale)); 
+                    top: calc(50% + -0.05448095001370565 * var(--scale));">
+            <img src="photos/h14.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -0.005726178587738082 * var(--scale)); 
+                    top: calc(50% + -0.05448095001370565 * var(--scale));">
+            <img src="photos/h18.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -0.15124368228710833 * var(--scale)); 
+                    top: calc(50% + -0.46548019107679794 * var(--scale));">
+            <img src="photos/h7.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -0.6698729810778061 * var(--scale)); 
+                    top: calc(50% + -1.160254037844386 * var(--scale));">
+            <img src="photos/h10.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -1.7186965867472155 * var(--scale)); 
+                    top: calc(50% + -1.908805938435675 * var(--scale));">
+            <img src="photos/h5.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -3.334887362273705 * var(--scale)); 
+                    top: calc(50% + -2.422937494799468 * var(--scale));">
+            <img src="photos/h2.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -5.419730449039036 * var(--scale)); 
+                    top: calc(50% + -2.413019462552294 * var(--scale));">
+            <img src="photos/h21.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -7.747792791959056 * var(--scale)); 
+                    top: calc(50% + -1.6468441963905978 * var(--scale));">
+            <img src="photos/h6.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -9.999999999999998 * var(--scale)); 
+                    top: calc(50% + -1.224646799147353e-15 * var(--scale));">
+            <img src="photos/h13.PNG">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -11.81515922271706 * var(--scale)); 
+                    top: calc(50% + 2.5113896199645915 * var(--scale));">
+            <img src="photos/h8.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -12.851178703812979 * var(--scale)); 
+                    top: calc(50% + 5.721713398963711 * var(--scale));">
+            <img src="photos/h9.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -12.845452525225243 * var(--scale)); 
+                    top: calc(50% + 9.332767551049992 * var(--scale));">
+            <img src="photos/h17.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -11.663915540429949 * var(--scale)); 
+                    top: calc(50% + 12.954090571112213 * var(--scale));">
+            <img src="photos/h1.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -9.3301270189222 * var(--scale)); 
+                    top: calc(50% + 16.16025403784438 * var(--scale));">
+            <img src="photos/h3.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -6.029096205211843 * var(--scale)); 
+                    top: calc(50% + 18.555650134826273 * var(--scale));">
+            <img src="photos/h12.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + -2.0848430867653294 * var(--scale)); 
+                    top: calc(50% + 19.835956957351762 * var(--scale));">
+            <img src="photos/h11.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 2.084843086765322 * var(--scale)); 
+                    top: calc(50% + 19.835956957351762 * var(--scale));">
+            <img src="photos/h16.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 6.029096205211836 * var(--scale)); 
+                    top: calc(50% + 18.555650134826276 * var(--scale));">
+            <img src="photos/h19.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 9.330127018922195 * var(--scale)); 
+                    top: calc(50% + 16.160254037844386 * var(--scale));">
+            <img src="photos/h4.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 11.663915540429942 * var(--scale)); 
+                    top: calc(50% + 12.954090571112216 * var(--scale));">
+            <img src="photos/h15.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 12.845452525225243 * var(--scale)); 
+                    top: calc(50% + 9.332767551049999 * var(--scale));">
+            <img src="photos/h20.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 12.85117870381298 * var(--scale)); 
+                    top: calc(50% + 5.72171339896371 * var(--scale));">
+            <img src="photos/h14.jpg">
+        </div>
+        
+        <div class="photo" 
+             style="left: calc(50% + 11.81515922271706 * var(--scale)); 
+                    top: calc(50% + 2.5113896199645964 * var(--scale));">
+            <img src="photos/h18.jpg">
+        </div>
+        
+    <button onclick="startAnimation()">Start 💖</button>
+    <div class="final-message" id="finalMsg">
+        You Are My Forever ❤️
+    </div>
+</div>
+
+<script>
+function startAnimation(){
+    let photos = document.querySelectorAll('.photo');
+
+    photos.forEach((photo, index)=>{
+        setTimeout(()=>{
+            photo.classList.add('move-up');
+        }, index * 180);   // smoother wave delay
+    });
+
+    setTimeout(()=>{
+        document.getElementById("finalMsg")
+        .classList.add("show-message");
+    }, 5000);
+}
+
+for(let i=0;i<25;i++){
+    let heart=document.createElement("div");
+    heart.className="bg-heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"%";
+    heart.style.animationDuration=(10+Math.random()*6)+"s";
+    document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
