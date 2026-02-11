@@ -19,197 +19,244 @@ def create_html():
         print("❌ No photos found.")
         return
 
-    # Generate heart coordinates (normalized)
     heart_positions = []
-    for t in range(0, 360, 12):
+    for t in range(0, 360, 14):
         theta = math.radians(t)
-        r = 10 * (1 - math.sin(theta))
-        x = r * math.cos(theta)
-        y = -r * math.sin(theta)
-        heart_positions.append((x, y))
+        x = 16 * math.sin(theta) ** 3
+        y = (
+            13 * math.cos(theta)
+            - 5 * math.cos(2 * theta)
+            - 2 * math.cos(3 * theta)
+            - math.cos(4 * theta)
+        )
+        heart_positions.append((x, -y))
 
     photo_divs = ""
     for i, (x, y) in enumerate(heart_positions):
         photo = photos[i % len(photos)]
-
         photo_divs += f"""
-        <div class="photo" 
-             style="left: calc(50% + {x} * var(--scale)); 
+        <div class="photo"
+             style="left: calc(50% + {x} * var(--scale));
                     top: calc(50% + {y} * var(--scale));">
             <img src="photos/{photo}">
         </div>
         """
 
-    html_content = f"""
+    html = """
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Responsive Heart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For Someone Special 💖</title>
 
 <style>
-:root {{
-    --scale: min(4vw, 4vh);   /* Automatically fits screen */
-}}
+:root { --scale: 3.8vmin; }
 
-body {{
+body {
     margin:0;
     height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     background: linear-gradient(135deg,#fff0f5,#ffd6e8);
     font-family:Arial, sans-serif;
     overflow:hidden;
-}}
+}
 
-.wrapper {{
-    position:relative;
-    width:90vmin;
-    height:90vmin;
-}}
-
-.photo {{
-    position:absolute;
-    transform: translate(-50%, -50%);
-    will-change: transform, opacity;
-}}
-
-.photo img {{
-    width:8vmin;
-    height:8vmin;
-    object-fit:cover;
-    border-radius:1.2vmin;
-    box-shadow:0 0 1.5vmin rgba(255,105,180,0.5);
-    animation: pulse 4s infinite ease-in-out;
-    transition: transform 0.4s ease;
-}}
-
-.photo img:hover {{
-    transform: scale(1.1);
-}}
-
-@keyframes pulse {{
-    0% {{ box-shadow:0 0 1vmin rgba(255,105,180,0.4); }}
-    50% {{ box-shadow:0 0 3vmin rgba(255,20,147,1); }}
-    100% {{ box-shadow:0 0 1vmin rgba(255,105,180,0.4); }}
-}}
-
-button {{
-    position:absolute;
-    bottom:-8vmin;
-    left:50%;
-    transform:translateX(-50%);
-    padding:1vmin 3vmin;
-    border:none;
-    border-radius:4vmin;
-    background:linear-gradient(45deg,#ff4da6,#ff1a75);
-    color:white;
-    font-size:2vmin;
-    cursor:pointer;
-    transition:0.3s;
-}}
-
-button:hover {{
-    transform:translateX(-50%) scale(1.1);
-}}
-
-.move-up {{
-    animation: floatUp 9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}}
-
-@keyframes floatUp {{
-    0% {{ 
-        transform: translate(-50%, -50%) translate3d(0,0,0);
-        opacity:1; 
-    }}
-    100% {{
-        transform: translate(-50%, -50%) translate3d(0,-130vh,0);
-        opacity:0; 
-    }}
-}}
-
-.final-message {{
+.center {
     position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    font-size:4vmin;
+    text-align:center;
+    width:90%;
+}
+
+.hidden { display:none; }
+
+button {
+    padding:2vmin 5vmin;
+    border:none;
+    border-radius:6vmin;
+    background:linear-gradient(45deg,#ff4da6,#ff1a75);
+    color:white;
+    font-size:3.5vmin;
+    margin:1.5vmin;
+}
+
+.wrapper {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90vmin;
+    height:90vmin;
+}
+
+.photo {
+    position:absolute;
+    transform: translate(-50%, -50%);
+}
+
+.photo img {
+    width:10vmin;
+    height:10vmin;
+    object-fit:cover;
+    border-radius:1.5vmin;
+    box-shadow:0 0 3vmin rgba(255,20,147,0.6);
+}
+
+.move-up {
+    animation: floatUp 9s forwards;
+}
+
+@keyframes floatUp {
+    100% {
+        transform: translate(-50%, -150vh);
+        opacity:0;
+    }
+}
+
+.final-message {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:5vmin;
     color:#e91e63;
     font-weight:bold;
     opacity:0;
-    transition:opacity 3s ease-in-out;
-}}
+    text-shadow:0 0 20px hotpink;
+    transition:opacity 3s;
+}
 
-.show-message {{
-    opacity:1;
-}}
+.show-message { opacity:1; }
 
-.bg-heart {{
-    position:absolute;
-    bottom:-30px;
-    font-size:3vmin;
-    color:#ff4da6;
-    animation: rise 14s linear infinite;
-    opacity:0.5;
-}}
+.typewriter {
+    font-size:4vmin;
+    color:#e91e63;
+    white-space:nowrap;
+    overflow:hidden;
+    border-right:.15em solid pink;
+}
 
-@keyframes rise {{
-    0% {{ transform: translateY(0); opacity:0.6; }}
-    100% {{ transform: translateY(-140vh); opacity:0; }}
-}}
+input[type=range] {
+    -webkit-appearance:none;
+    width:70vmin;
+    height:2vmin;
+    border-radius:2vmin;
+    background:linear-gradient(90deg,#ff4da6,#ff85c2);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none;
+    width:6vmin;
+    height:6vmin;
+    border-radius:50%;
+    background:white;
+}
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-    {photo_divs}
-    <button onclick="startAnimation()">Start 💖</button>
+<audio id="bgMusic" loop>
+    <source src="Edd_Sheeran_-_Perfect_(mp3.pm).mp3" type="audio/mp3">
+</audio>
+
+
+<div class="center" id="intro">
+    <div class="typewriter" id="typeText"></div><br><br>
+    <button onclick="goProposal()">Continue 💖</button>
+</div>
+
+<div class="center hidden" id="proposal">
+    <h2>Will You Be Mine? 💍</h2>
+    <p>You can press <b>NO</b>… if you want 😏</p>
+    <button onclick="startSlider()">YES 💖</button>
+    <button id="noBtn">NO 😈</button>
+</div>
+
+<div class="center hidden" id="sliderScreen">
+    <h2>Unlock My Heart 💖</h2>
+    <p>Slide until the heart is full</p>
+    <input type="range" min="0" max="100" value="0" id="loveSlider">
+    <div id="heartFill" style="font-size:6vmin;margin-top:2vmin;">🤍</div>
+</div>
+
+<div class="wrapper hidden" id="mainContent">
+    __PHOTOS__
     <div class="final-message" id="finalMsg">
-        You Are My Forever ❤️
+        From the moment you came into my life, everything felt more certain, more beautiful, more real. Just like “Perfect”. Forever Starts With You. I miss you. Happy Valentines! ❤️
     </div>
 </div>
 
 <script>
-function startAnimation(){{
-    let photos = document.querySelectorAll('.photo');
+let text="Happy Valentine’s, Hamna Baby. I love you. More than words, more than reasons, more every single day. ❤️";
+let i=0;
 
-    photos.forEach((photo, index)=>{{
-        setTimeout(()=>{{
-            photo.classList.add('move-up');
-        }}, index * 180);   // smoother wave delay
-    }});
+function typeWriter(){
+    if(i<text.length){
+        document.getElementById("typeText").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typeWriter,60);
+    }
+}
+typeWriter();
 
-    setTimeout(()=>{{
-        document.getElementById("finalMsg")
-        .classList.add("show-message");
-    }}, 5000);
-}}
+function goProposal(){
+    intro.classList.add("hidden");
+    proposal.classList.remove("hidden");
+}
 
-for(let i=0;i<25;i++){{
-    let heart=document.createElement("div");
-    heart.className="bg-heart";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"%";
-    heart.style.animationDuration=(10+Math.random()*6)+"s";
-    document.body.appendChild(heart);
-}}
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("click",()=>{
+    noBtn.innerHTML="YES 💖";
+    noBtn.onclick=startSlider;
+});
+
+function startSlider(){
+    proposal.classList.add("hidden");
+    sliderScreen.classList.remove("hidden");
+}
+
+const slider=document.getElementById("loveSlider");
+const heart=document.getElementById("heartFill");
+
+slider.addEventListener("input",()=>{
+    if(slider.value<30) heart.innerHTML="🤍";
+    else if(slider.value<60) heart.innerHTML="💗";
+    else if(slider.value<90) heart.innerHTML="💖";
+    else{
+        heart.innerHTML="❤️";
+        sliderScreen.classList.add("hidden");
+        startAnimation();
+    }
+});
+
+function startAnimation(){
+    bgMusic.play();
+    mainContent.classList.remove("hidden");
+    document.querySelectorAll(".photo").forEach((p,i)=>{
+        setTimeout(()=>p.classList.add("move-up"),i*150);
+    });
+    setTimeout(()=>finalMsg.classList.add("show-message"),4000);
+}
 </script>
 
 </body>
 </html>
 """
 
-    with open("index.html", "w") as f:
-        f.write(html_content)
+    html = html.replace("__PHOTOS__", photo_divs)
 
-    print("💖 Responsive centered heart created.")
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print("💖 Fixed! HTML generated successfully.")
 
 
 def start_server(port=8000):
-    print(f"🚀 Open: http://localhost:{port}")
-    server = HTTPServer(("localhost", port), SimpleHTTPRequestHandler)
+    print(f"🚀 Open on laptop: http://localhost:{port}")
+    server = HTTPServer(("0.0.0.0", port), SimpleHTTPRequestHandler)
     server.serve_forever()
 
 
